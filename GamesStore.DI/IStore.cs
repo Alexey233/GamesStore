@@ -2,14 +2,14 @@
 
 namespace GamesStore.DI
 {
-    public interface IShop
+    public interface IStore
     {
         string Name { get; set; }
         string Url { get; set; }
 
         void Add(IGame game);
         IEnumerable<IGame> GetAllGames();
-        void Sell(IGame game);
+        ICheck Sell(IGame game);
         
     }
 }
