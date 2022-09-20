@@ -8,6 +8,6 @@ namespace GamesStore.DI
         IStore Store { get; set; }
         DateTime DateTime { get; set; }
 
-        void Print();
+        string Print();
     }
 }

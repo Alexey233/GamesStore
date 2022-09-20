@@ -1,19 +1,15 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <OutputType>Exe</OutputType>
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="SimpleInjector" Version="5.4.0" />
-  </ItemGroup>
-
-  <ItemGroup>
+    <ProjectReference Include="..\GamesStore.BLL\GamesStore.BLL.csproj" />
+    <ProjectReference Include="..\GamesStore.Data.Memory\GamesStore.Data.Memory.csproj" />
     <ProjectReference Include="..\GamesStore.DI\GamesStore.DI.csproj" />
-    <ProjectReference Include="..\GamesStore.Settings\GamesStore.Settings.csproj" />
   </ItemGroup>
 
 </Project>

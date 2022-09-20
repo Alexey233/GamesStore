@@ -13,13 +13,8 @@ namespace GamesStore.BLL
     {
         private readonly IData<ICheck> _checkData;
         private readonly IData<IGame> _gameData;
-        public Store(string name, string url, IData<ICheck> check, IData<IGame> game)
+        public Store(IData<ICheck> check, IData<IGame> game)
         {
-            if (string.IsNullOrWhiteSpace(name)) throw new ArgumentNullException(nameof(name));
-            if (string.IsNullOrWhiteSpace(url)) throw new ArgumentNullException(nameof(url));
-
-            Name = name;
-            Url = url;
             _checkData = check ?? throw new ArgumentNullException(nameof(_checkData));
             _gameData = game ?? throw new ArgumentNullException(nameof(_gameData)); ;
         }
@@ -39,7 +34,14 @@ namespace GamesStore.BLL
 
         public ICheck Sell(IGame game)
         {
-            var check = new Check(this, game);
+            _gameData.Remove(game);
+
+            var check = new Check()
+            {
+                Game = game,
+                Store = this,
+                DateTime = DateTime.Now
+            };
             _checkData.Add(check);
             return check;
         }

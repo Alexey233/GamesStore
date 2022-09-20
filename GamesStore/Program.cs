@@ -1,40 +1,66 @@
 ﻿using GamesStore.DI;
-using GamesStore.BLL;
-using GamesStore.Data.Memory;
+using GamesStore.Settings;
+using System.Net;
 using System.Text;
 
 namespace GamesStore.Cmd
 {
     partial class Program
     {
+        private static Configuration _configuration;
+        private static Configuration SetConfiguration()
+        {
+            var configuration = new Configuration();
+            return configuration;
+        }
+
         private static IGame CreateGame(string name, string company, string description, int price, int size)
         {
-            var game = new Game(name, description, company, price, size);
+            var game = _configuration.Container.GetInstance<IGame>();
+            game.Name = name;
+            game.Company = company;
+            game.Description = description;
+            game.Price = price;
+            game.Size = size;
+
+            var store = _configuration.Container.GetInstance<IStore>();
+            store.Add(game);
+
+
             return game;
         }
 
-        private static ICheck CreateCheck(IStore store, IGame game)
+        private static ICheck CreateCheck(IGame game)
         {
-            var check = new Check(store, game);
+            var store = _configuration.Container.GetInstance<IStore>();
+            var check = store.Sell(game);
+
             return check;
         }
 
         private static IStore CreateStore(string name, string url)
         {
-            var gameData = new GameMemoryData();
-            var checkData = new CheckMemoryData();
+            var store = _configuration.Container.GetInstance<IStore>();
+            store.Name = name;
+            store.Url = url;
 
-            var shop = new Store(name, url, checkData, gameData);
-
-            return shop;
+            return store;
         }
 
+        private static IEnumerable<IGame> GetAllGames()
+        {
+            var store = _configuration.Container.GetInstance<IStore>();
+            var books = store.GetAllGames();
 
+            return books;
+        }
 
         static void Main(string[] args)
         {
             try
             {
+                _configuration = SetConfiguration();
+
                 var store = CreateStore("Steam", "steam.com");
 
                 Console.OutputEncoding = Encoding.UTF8;
@@ -53,13 +79,13 @@ namespace GamesStore.Cmd
                             HelpMessage();
                             break;
                         case HelpEnums.addGame:
-                            AddGame(store);
+                            AddGame();
                             break;
                         case HelpEnums.getAllGames:
-                            ShowAllGames(store);
+                            ShowAllGames();
                             break;
                         case HelpEnums.sellGame:
-                            SellGame(store);
+                            SellGame();
                             break;
                         default:
                             WriteErrorMessage("Не обрабатываемая команда. Свяжитесь с разработчиком");
@@ -77,10 +103,10 @@ namespace GamesStore.Cmd
         }
 
 
-        private static IGame AddGame(IStore store)
+        private static IGame AddGame()
         {
             Console.WriteLine("Добавляем новую игру в магазин");
-
+           
             while (true)
             {
                 var name = ReadNotEmptyLine("название игры");
@@ -94,7 +120,6 @@ namespace GamesStore.Cmd
 
                 if (game != null)
                 {
-                    store.Add(game);
                     Console.WriteLine("Игра успешно добавлена");
                     Console.WriteLine();
                     return game;
@@ -107,18 +132,18 @@ namespace GamesStore.Cmd
 
         
 
-        private static void ShowAllGames(IStore store)
+        private static void ShowAllGames()
         {
             Console.WriteLine("Список всех доступных в магазине игр:");
 
-            var games = store.GetAllGames();
+            var games = GetAllGames();
             foreach (var game in games)
             {
                 Console.WriteLine($"\t{game.Name}");
             }
             Console.WriteLine();
         }
-        private static void SellGame(IStore store)
+        private static void SellGame()
         {
             Console.WriteLine("Продажа игры");
 
@@ -126,7 +151,7 @@ namespace GamesStore.Cmd
             while (true)
             {
                 var name = ReadNotEmptyLine("название игры");
-                var games = store.GetAllGames();
+                var games = GetAllGames();
                 var result = games.FirstOrDefault(b => b.Name.Equals(name));
 
                 if (result != null)
@@ -138,8 +163,8 @@ namespace GamesStore.Cmd
                 WriteErrorMessage("Данная игра не найдена");
             }
 
-            var check = CreateCheck(store, game);
-            check.Print();
+            var check = CreateCheck(game);
+            Console.WriteLine(check.Print());
             Console.WriteLine();
         }
     }
