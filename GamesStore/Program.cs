@@ -8,11 +8,6 @@ namespace GamesStore.Cmd
     partial class Program
     {
         private static Configuration _configuration;
-        private static Configuration SetConfiguration()
-        {
-            var configuration = new Configuration();
-            return configuration;
-        }
 
         private static IGame CreateGame(string name, string company, string description, int price, int size)
         {
@@ -59,7 +54,7 @@ namespace GamesStore.Cmd
         {
             try
             {
-                _configuration = SetConfiguration();
+                _configuration = new Configuration();
 
                 var store = CreateStore("Steam", "steam.com");
 
@@ -164,7 +159,11 @@ namespace GamesStore.Cmd
             }
 
             var check = CreateCheck(game);
-            Console.WriteLine(check.Print());
+            Console.WriteLine($"Новая продажа в магазине {check.Store.Name}");
+            Console.WriteLine($"по адресу {check.Store.Url}");
+            Console.WriteLine($"{check.DateTime}");
+            Console.WriteLine($"Наименование товара: {check.Game.Name}");
+            Console.WriteLine($"Стоимость: {check.Game.Price}₽");
             Console.WriteLine();
         }
     }

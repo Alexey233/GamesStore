@@ -11,7 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GamesStore.BLL", "GamesStor
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GamesStore.Data.Memory", "GamesStore.Data.Memory\GamesStore.Data.Memory.csproj", "{A691D9CF-5E6C-49E0-A68D-F916E21A3619}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GamesStore.Settings", "GamesStore.Settings\GamesStore.Settings.csproj", "{D7A86894-C36A-4A44-B4EA-76D9B138AB9B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GamesStore.Settings", "GamesStore.Settings\GamesStore.Settings.csproj", "{D7A86894-C36A-4A44-B4EA-76D9B138AB9B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GamesStore.Data.Sql", "GamesStore.Data.Sql\GamesStore.Data.Sql.csproj", "{E44E30F2-5C99-4E71-9D9E-CF9FD9C73306}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{D7A86894-C36A-4A44-B4EA-76D9B138AB9B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D7A86894-C36A-4A44-B4EA-76D9B138AB9B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D7A86894-C36A-4A44-B4EA-76D9B138AB9B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E44E30F2-5C99-4E71-9D9E-CF9FD9C73306}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E44E30F2-5C99-4E71-9D9E-CF9FD9C73306}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E44E30F2-5C99-4E71-9D9E-CF9FD9C73306}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E44E30F2-5C99-4E71-9D9E-CF9FD9C73306}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

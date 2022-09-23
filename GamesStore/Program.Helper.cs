@@ -39,7 +39,7 @@ namespace GamesStore.Cmd
                 WriteErrorMessage("Введите целое число");
             }
         }
-
+        
         private static HelpEnums ReadCommand()
         {
             while (true)
